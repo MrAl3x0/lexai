@@ -1,15 +1,3 @@
----
-title: Legal Lens
-emoji: 👨🏻‍⚖️
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 3.23.0
-app_file: app.py
-pinned: false
-license: mit
----
-
 # LegalLens: AI-Powered Legal Research Assistant
 
 LegalLens is an AI legal assistant that delivers accurate legal information based on user queries and jurisdictions. Using OpenAI's GPT-4 and text-embedding models, it offers a user-friendly interface with AI-generated responses and references.
