@@ -3,3 +3,6 @@ numpy
 openai
 gradio
 scipy
+python-dotenv
+pytest
+pytest-mock
