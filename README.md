@@ -14,20 +14,6 @@ lexai is an AI legal assistant that delivers accurate legal information based on
 - **Powered by GPT-4**: Leverages OpenAI's most advanced models for high-quality responses.
 - **Professional Structure**: Organized into a scalable and maintainable package.
 
-## **Project Structure**
-
-lexai/  
-├── .gitattributes \# Configures Git LFS for large files.  
-├── .gitignore \# Specifies files for Git to ignore.  
-├── embeddings/ \# Contains large data files (embeddings).  
-├── lexai_app/ \# The main Python source code package.  
-│ ├── core.py \# Core logic for matching and API calls.  
-│ └── main.py \# Gradio UI and application entry point.  
-├── tests/ \# Unit tests for the application.  
-├── LICENSE \# The MIT License for the project.  
-├── README.md \# This file.  
-└── requirements.txt \# Project dependencies.
-
 ## **Getting Started**
 
 Follow these instructions to set up and run the project locally.
