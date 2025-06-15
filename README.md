@@ -12,7 +12,6 @@
 - **Jurisdiction-Specific** — Get answers tailored to specific legal jurisdictions (currently supports Boulder and Denver, CO).
 - **Source Referencing** — Responses include links to the original legal texts used to generate the answer.
 - **Powered by GPT-4** — Leverages OpenAI's most advanced models for high-quality responses.
-- **Professional Structure** — Organized into a scalable and maintainable package.
 
 ## Getting Started
 
@@ -41,7 +40,7 @@ Follow these instructions to set up and run the project locally.
 
 3. **Create a virtual environment (recommended)**
     ```bash
-    python3 -m venv venv
+    python -m venv venv
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
 
@@ -62,7 +61,7 @@ Follow these instructions to set up and run the project locally.
 
 Start the Gradio web app from the root directory:
 ```bash
-python3 -m lexai_app.main
+python -m lexai_app.main
 ```
 This will start the server and provide a local URL to open in your browser.
 
@@ -70,7 +69,7 @@ This will start the server and provide a local URL to open in your browser.
 
 Run automated tests with:
 ```bash
-python3 -m pytest
+python -m pytest
 ```
 
 ## License
