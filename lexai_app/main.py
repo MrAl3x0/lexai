@@ -35,10 +35,10 @@ iface = gr.Interface(
     title="lexai Demo",
     description=DESCRIPTION,
     examples=[
-        ["Is it legal for me to use rocks to construct a cairn in an outdoor area?", "Boulder"],
-        ["Is it legal to possess a dog and take ownership of it as a pet in Boulder?", "Boulder"],
-        ["As per the local laws, am I allowed to go without a shirt in public places?", "Boulder"],
-        ["Can I legally graze my llama on public land?", "Boulder"]
+        ["What are the rules for operating a short-term rental like an Airbnb?", "Boulder, CO"],
+        ["What are the local regulations regarding noise complaints in residential areas?", "Denver, CO"],
+        ["What permits are required to operate a food truck?", "Denver, CO"],
+        ["Are there specific leash laws for dogs in open space parks?", "Boulder, CO"],
     ],
     allow_flagging="never"
 )

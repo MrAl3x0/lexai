@@ -25,11 +25,11 @@ except Exception as e:
 MODEL_ENGINE = "text-embedding-ada-002"
 
 LOCATION_INFO = {
-    "Boulder": {
+    "Boulder, CO": {
         "npz_file": "embeddings/boulder_embeddings.npz",
         "role_description": "You are an AI-powered legal assistant specializing in the jurisdiction of Boulder County, Colorado."
     },
-    "Denver": {
+    "Denver, CO": {
         "npz_file": "embeddings/denver_embeddings.npz",
         "role_description": "You are an AI-powered legal assistant specializing in the jurisdiction of Denver, Colorado."
     }
