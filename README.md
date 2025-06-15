@@ -55,7 +55,6 @@ Follow these instructions to set up and run the project locally.
     ```
     OPENAI_API_KEY="your-api-key-goes-here"
     ```
-    _(The `.gitignore` file will prevent this file from being committed.)_
 
 ## Usage
 
