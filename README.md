@@ -1,32 +1,32 @@
 # LexAI Demo
 
-## AI-Powered Legal Research Assistant (Gradio Demo)
+## AI-Powered Legal Research Assistant
 
 This repository hosts a demonstration of LexAI, an AI-powered legal research assistant designed to provide relevant legal information based on user queries and specified locations. This project serves as a proof of concept, showcasing the integration of large language models (LLMs) with local embedding data for specialized information retrieval.
 
 ### Features
 
 * AI-Powered Responses: Utilizes OpenAI's GPT models to generate natural language responses to legal queries.
-* Location-Specific Information: Provides legal information tailored to specific jurisdictions (currently Boulder and Denver).
+* Location-Specific Information: Provides legal information tailored to specific jurisdictions (currently Boulder County, Colorado, and Denver, Colorado).
 * Semantic Search: Employs embeddings and vector similarity search to find the most relevant legal documents.
 * Interactive Web Interface: Built with Gradio for an easy-to-use, browser-based demonstration.
 
 ### Getting Started
 
-Follow these steps to set up and run the LexAI Demo on your local machine.
+Follow these steps to set up and run the LexAI demo on your local machine.
 
 #### 1. Clone the Repository
 
 First, clone this repository to your local machine:
 
 ```shell
-git clone [https://github.com/alexulanch/lexai-demo.git](https://github.com/alexulanch/lexai-demo.git) # Assuming you rename your GitHub repo
+git clone https://github.com/alexulanch/lexai-demo.git
 cd lexai-demo
 ```
 
 #### 2. Install Dependencies
 
-Install the required Python packages using pip:
+Install the required Python packages using pip. The dependencies are `pandas`, `numpy`, `openai`, `gradio`, `scipy`, and `python-dotenv`.
 
 ```shell
 pip install -r requirements.txt
@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 #### 3. Obtain and Configure OpenAI API Key
 
-This application relies on the OpenAI API. You will need an API key with access to the models used (e.g., `text-embedding-ada-002` for embeddings and `gpt-4` for chat completions).
+This application relies on the OpenAI API. You will need an API key to use the models for embeddings and chat completions (e.g., text-embedding-ada-002, gpt-4).
 
 **Important: Never hardcode your API key directly into your code or commit it to version control!**
 
@@ -46,7 +46,7 @@ This application relies on the OpenAI API. You will need an API key with access 
     ```
     OPENAI_API_KEY="your_openai_api_key_here"
     ```
-    Replace `"Your OpenAI API Key Here"` with your actual API key. The quotes are optional but good practice if your key contains special characters.
+    Replace `"your_openai_api_key_here"` with your actual API key. The quotes are optional but good practice if your key contains special characters.
 3.  **Ensure `.env` is in `.gitignore`:** The `.gitignore` file in this repository should already include `.env` to prevent it from being accidentally committed.
 
 #### 4. Run the Application
@@ -82,15 +82,11 @@ lexai-demo/
 ```
 
 * `lexai/__main__.py`: This is the heart of the Gradio application, defining the UI and orchestrating the calls to core logic and services.
-* `lexai/config.py`: Stores global application settings, model names, and role descriptions.
-* `lexai/core/`: Contains the fundamental algorithms and data processing logic, such as loading embeddings and performing similarity searches.
-* `lexai/services/`: Encapsulates interactions with external APIs, specifically the OpenAI API.
+* `lexai/config.py`: Stores global application settings, model names (e.g., `MODEL_ENGINE = "text-embedding-ada-002"`, `GPT4_MODEL = "gpt-4"`), and role descriptions.
+* `lexai/core/`: Contains the fundamental algorithms and data processing logic, such as loading embeddings (`data_loader.py`) and performing similarity searches (`matcher.py`).
+* `lexai/services/`: Encapsulates interactions with external APIs, specifically the OpenAI API (`openai_client.py`).
 * `.devcontainer/`: Provides configuration for consistent development environments using VS Code Dev Containers.
-* `pyproject.toml`: A modern standard for defining project metadata and build system requirements. It also includes `isort` configuration to ensure consistent import ordering.
-
-### Configuration (`pyproject.toml`)
-
-The `pyproject.toml` file is used for project metadata and tool configuration. Notably, it includes settings for `isort`, a utility that sorts Python imports. The `[tool.isort]` section defines `known_local_folder = ["lexai"]`, which tells `isort` to treat imports from the `lexai` package as "first-party" (your own project's code) and group them accordingly. This helps maintain a clean and consistent import structure.
+* `pyproject.toml`: A modern standard for defining project metadata and build system requirements.
 
 ### Usage
 
@@ -111,7 +107,7 @@ The application includes basic error handling for common issues:
 
 ### Contributing
 
-Contributions are welcome! If you have suggestions for improvements or encounter issues, please open an issue or submit a pull request.
+Contributions are welcome. If you have suggestions for improvements or encounter issues, please open an issue or submit a pull request.
 
 ### License
 
@@ -119,5 +115,5 @@ MIT
 
 ### Acknowledgements
 
-* Built with [Gradio](https://www.gradio.app/)
-* Powered by [OpenAI](https://openai.com/)
+* Built with Gradio
+* Powered by OpenAI

@@ -118,8 +118,8 @@ def generate_matches(query: str, location: str) -> str:
 </p>"""
 
 
-with gr.Blocks(title="LexAI Demo") as iface:
-    gr.HTML("<h1 style='text-align: center;'>LexAI Demo</h1>")
+with gr.Blocks(title="LexAI") as iface:
+    gr.HTML("<h1 style='text-align: center;'>LexAI</h1>")
     gr.Markdown(APP_DESCRIPTION)
 
     with gr.Row():
