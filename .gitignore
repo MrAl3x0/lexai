@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.mypy_cache/
+*.so
+build/
+dist/
+htmlcov/
+.coverage.*
+.nox/
+.tox/
+pip-log.txt
+pip-delete-this-directory.txt
+.ipynb_checkpoints/
+
+# Environment
+.env
+
+# VSCode
+.vscode/*.code-workspace
+.vscode/*.log
+.vscode/*.vsix
+.vscode/*.bak
+.vscode/.history/
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/settings.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
