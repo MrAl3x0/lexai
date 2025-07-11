@@ -3,3 +3,7 @@ numpy
 openai
 gradio
 scipy
+isort
+black
+pytest
+python-dotenv
