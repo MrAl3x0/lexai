@@ -1,14 +1,14 @@
 [project]
 name = "lexai"
 version = "0.1.0"
-description = "An AI legal assistant that delivers accurate legal information."
+description = "A demo of LexAI, an AI legal assistant that delivers accurate legal information."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
 authors = [
   { name = "Alex Ulanch", email = "alexulanch@gmail.com" },
 ]
-keywords = ["AI", "Legal", "Gradio", "OpenAI"]
+keywords = ["AI", "Legal", "Gradio", "OpenAI", "RAG"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",  
@@ -60,6 +60,7 @@ exclude = '''
 '''
 
 [tool.isort]
+known_local_folder = ["lexai"]
 profile = "black"
 line_length = 88
 known_first_party = ["lexai"]
