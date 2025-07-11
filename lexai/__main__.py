@@ -1,14 +1,21 @@
+import logging
+import os
+import openai
 import gradio as gr
+from dotenv import load_dotenv
+
+if not os.getenv("OPENAI_API_KEY"):
+    load_dotenv(override=True)
+
 from lexai.config import (
     LOCATION_INFO,
     APP_DESCRIPTION,
     AI_ROLE_TEMPLATE,
 )
-from lexai.services.openai_client import get_embedding, get_chat_completion
+
 from lexai.core.data_loader import load_embeddings_data
 from lexai.core.matcher import find_top_matches
-import logging
-import openai
+from lexai.services.openai_client import get_embedding, get_chat_completion
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -85,7 +92,7 @@ def generate_matches(query: str, location: str) -> str:
     except openai.AuthenticationError:
         logging.error("OpenAI Authentication Error: Invalid API key provided.")
         return """<p style="font-family: Arial, sans-serif; font-size: 16px; color: #d9534f;">
-    <strong>Error:</strong> Invalid OpenAI API key. Please ensure your `OPENAI_API_KEY` environment variable is correctly set in your dev container and has access to GPT-4.
+    <strong>Error:</strong> Invalid OpenAI API key. Please ensure your `OPENAI_API_KEY` environment variable is correctly set.
 </p>"""
     except openai.OpenAIError as e:
         logging.error(f"OpenAI API Error: {e}")
