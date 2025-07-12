@@ -2,10 +2,15 @@ import logging
 
 import gradio as gr
 
-from lexai.config import APP_DESCRIPTION, LOCATION_INFO
+from lexai.config import LOCATION_INFO
 from lexai.core.match_engine import generate_matches
 
 logger = logging.getLogger(__name__)
+
+APP_DESCRIPTION = """
+LexAI is an AI-powered legal assistant that uses GPT-4 and semantic search
+to provide jurisdiction-specific legal guidance.
+"""
 
 
 def build_interface():
@@ -42,8 +47,11 @@ def build_interface():
         def handle_clear():
             return gr.update(value="Response will appear here.")
 
-        submit_btn.click(fn=handle_submit, inputs=[
-                         query_input, location_input], outputs=[response_output])
+        submit_btn.click(
+            fn=handle_submit,
+            inputs=[query_input, location_input],
+            outputs=[response_output]
+        )
         clear_btn.click(fn=handle_clear, outputs=[response_output])
 
         gr.Examples(
