@@ -3,7 +3,7 @@ import logging
 from lexai.ui.gradio_interface import build_interface
 
 
-def main():
+def run_lexai_app():
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("httpx").setLevel(logging.WARNING)
 
@@ -13,4 +13,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_lexai_app()
