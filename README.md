@@ -2,14 +2,18 @@
 
 ## AI-Powered Legal Research Assistant
 
-This repository hosts a demonstration of LexAI, an AI-powered legal research assistant designed to provide relevant legal information based on user queries and specified locations. This project serves as a proof of concept, showcasing the integration of large language models (LLMs) with local embedding data for specialized information retrieval.
+This repository hosts a demonstration of **LexAI**, an AI-powered legal research assistant designed to provide relevant legal information based on user queries and specified locations. This project serves as a proof of concept, showcasing the integration of large language models (LLMs) with local embedding data for specialized information retrieval.
 
 ### Features
 
-* AI-Powered Responses: Utilizes OpenAI's GPT models to generate natural language responses to legal queries.
-* Location-Specific Information: Provides legal information tailored to specific jurisdictions (currently Boulder County, Colorado, and Denver, Colorado).
-* Semantic Search: Employs embeddings and vector similarity search to find the most relevant legal documents.
-* Interactive Web Interface: Built with Gradio for an easy-to-use, browser-based demonstration.
+![LexAI Demo Screenshot](assets/screenshot.png)
+
+- **AI-Powered Responses**: Utilizes OpenAI's GPT-4 model to generate natural language responses to legal queries.
+- **Location-Specific Information**: Provides legal information tailored to specific jurisdictions (currently Boulder County, Colorado, and Denver, Colorado).
+- **Semantic Search**: Employs embeddings and vector similarity search to find the most relevant legal documents.
+- **Interactive Web Interface**: Built with Gradio for an easy-to-use, browser-based demonstration.
+
+---
 
 ### Getting Started
 
@@ -17,103 +21,116 @@ Follow these steps to set up and run the LexAI demo on your local machine.
 
 #### 1. Clone the Repository
 
-First, clone this repository to your local machine:
-
-```shell
+```bash
 git clone https://github.com/alexulanch/lexai-demo.git
 cd lexai-demo
 ```
 
+This project uses [Git LFS](https://git-lfs.github.com/) to manage the embedding data.
+
+If you’re **not using the provided dev container**, install Git LFS before cloning:
+
+```bash
+git lfs install
+git lfs pull
+```
+---
+
 #### 2. Install Dependencies
 
-Install the required Python packages using pip. The dependencies are `pandas`, `numpy`, `openai`, `gradio`, `scipy`, and `python-dotenv`.
+Install the required Python packages using pip. The dependencies are: `pandas`, `numpy`, `openai`, `gradio`, `scipy`, and `python-dotenv`.
 
-```shell
+```bash
 pip install -r requirements.txt
 ```
 
-#### 3. Obtain and Configure OpenAI API Key
+---
 
-This application relies on the OpenAI API. You will need an API key to use the models for embeddings and chat completions (e.g., text-embedding-ada-002, gpt-4).
+#### 3. Configure Your OpenAI API Key
 
-**Important: Never hardcode your API key directly into your code or commit it to version control!**
+This application relies on the OpenAI API. You will need an API key to access the models used for embeddings and chat completions (e.g., `text-embedding-ada-002`, `gpt-4`).
 
-**Using a `.env` file (for local development)**
+**Using a `.env` file (recommended for local development):**
 
-1.  Create a new file named `.env` in the **root directory** of your project (the same directory as `pyproject.toml` and `requirements.txt`).
-2.  Add your OpenAI API key to this file in the following format:
+1. Create a file named `.env` in the root directory of the project.
+2. Add your API key to the file like this:
 
-    ```
+    ```dotenv
     OPENAI_API_KEY="your_openai_api_key_here"
     ```
-    Replace `"your_openai_api_key_here"` with your actual API key. The quotes are optional but good practice if your key contains special characters.
-3.  **Ensure `.env` is in `.gitignore`:** The `.gitignore` file in this repository should already include `.env` to prevent it from being accidentally committed.
+
+3. Ensure `.env` is listed in `.gitignore` to avoid committing it by mistake.
+
+---
 
 #### 4. Run the Application
 
-Once your API key is configured, you can launch the Gradio application:
+Start the Gradio app:
 
-```shell
+```bash
 python -m lexai
 ```
 
-The application will start, and you will see a local URL (e.g., `http://127.0.0.1:7860`) in your terminal. Open this URL in your web browser to interact with the LexAI Demo.
+You’ll see a local URL like `http://127.0.0.1:7860` — open it in your browser to use LexAI Demo.
+
+---
 
 ### Project Structure
 
-The project is organized into a clear and modular structure:
-
 ```
 lexai-demo/
-├── .devcontainer/             # Development container configuration (for VS Code Dev Containers)
+├── .devcontainer/             # Dev container config for VS Code
 │   └── devcontainer.json
-├── lexai/                     # Main Python package for the application
+├── lexai/                     # Main Python package
 │   ├── __init__.py
-│   ├── __main__.py            # Application entry point (Gradio app)
-│   ├── config.py              # Application-wide configuration and constants
+│   ├── __main__.py            # Gradio app entry point
+│   ├── config.py              # Global app config and constants
 │   ├── core/                  # Core logic components
-│   │   ├── data_loader.py     # Handles loading of embedding data
-│   │   └── matcher.py         # Logic for finding semantic matches
-│   └── services/              # External service integrations
-│       └── openai_client.py   # Client for interacting with OpenAI API
-├── pyproject.toml             # Project metadata and build configuration (PEP 517/518)
-├── requirements.txt           # Python package dependencies
-└── .gitignore                 # Specifies files/directories to ignore in Git
+│   │   ├── data_loader.py     # Loads embedding data
+│   │   └── matcher.py         # Semantic search logic
+│   └── services/              # External API integrations
+│       └── openai_client.py   # Interacts with OpenAI API
+├── pyproject.toml             # Project metadata and build config
+├── requirements.txt           # Python dependencies
+└── .gitignore                 # Files/directories Git should ignore
 ```
 
-* `lexai/__main__.py`: This is the heart of the Gradio application, defining the UI and orchestrating the calls to core logic and services.
-* `lexai/config.py`: Stores global application settings, model names (e.g., `MODEL_ENGINE = "text-embedding-ada-002"`, `GPT4_MODEL = "gpt-4"`), and role descriptions.
-* `lexai/core/`: Contains the fundamental algorithms and data processing logic, such as loading embeddings (`data_loader.py`) and performing similarity searches (`matcher.py`).
-* `lexai/services/`: Encapsulates interactions with external APIs, specifically the OpenAI API (`openai_client.py`).
-* `.devcontainer/`: Provides configuration for consistent development environments using VS Code Dev Containers.
-* `pyproject.toml`: A modern standard for defining project metadata and build system requirements.
+---
 
 ### Usage
 
-1.  Enter your legal question in the "Query" textbox.
-2.  Select the desired "Location" (Boulder or Denver) from the dropdown.
-3.  Click the "Submit" button to get an AI-generated response and relevant legal references.
-4.  Use the "Clear" button to reset the input and output.
-5.  Explore the "Examples" provided to quickly test the application.
+1. Enter your legal question in the "Query" textbox.
+2. Select the desired "Location" (Boulder or Denver) from the dropdown.
+3. Click "Submit" to get an AI-generated response and relevant legal references.
+4. Use the "Clear" button to reset.
+5. Explore the example queries provided.
+
+---
 
 ### Error Handling
 
-The application includes basic error handling for common issues:
+The app handles several common error cases:
 
-* `Invalid OpenAI API key...`: This indicates that the `OPENAI_API_KEY` environment variable is either missing, empty, or incorrect. Please double-check your `.env` file or system environment variable setup.
-* `OpenAI API Error...`: General errors from the OpenAI API (e.g., rate limiting, network issues).
-* `File Error...`: Problems loading the embedding data files (e.g., `npz` files). Ensure they are correctly placed and accessible.
-* `Input Error...`: Issues with the input provided to the application.
+- `Invalid OpenAI API key...`: Check your `.env` file or environment variable setup.
+- `OpenAI API Error...`: Rate limits, network issues, etc.
+- `File Error...`: Missing or unreadable `.npz` embedding files.
+- `Input Error...`: Malformed or missing user input.
+
+---
 
 ### Contributing
 
-Contributions are welcome. If you have suggestions for improvements or encounter issues, please open an issue or submit a pull request.
+Contributions are welcome! Open an issue or pull request with ideas or fixes.
+
+---
 
 ### License
 
 MIT
 
+---
+
 ### Acknowledgements
 
-* Built with Gradio
-* Powered by OpenAI
+- Built with [Gradio](https://gradio.app)
+- Powered by [OpenAI](https://openai.com)
