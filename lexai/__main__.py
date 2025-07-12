@@ -1,3 +1,9 @@
+"""
+Entry point for launching the LexAI application.
+
+This script configures logging and starts the Gradio interface.
+"""
+
 import logging
 
 from lexai.ui.gradio_interface import build_interface
