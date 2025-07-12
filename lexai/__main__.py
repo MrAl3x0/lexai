@@ -10,6 +10,9 @@ from lexai.ui.gradio_interface import build_interface
 
 
 def run_lexai_app():
+    """
+    Configures logging and launches the LexAI Gradio interface.
+    """
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("httpx").setLevel(logging.WARNING)
 

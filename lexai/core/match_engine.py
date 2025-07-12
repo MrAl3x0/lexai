@@ -1,3 +1,11 @@
+"""
+Core logic for generating legal responses based on user queries and location.
+
+This module embeds the matching engine that performs semantic search using vector
+similarity and invokes GPT-4 to generate responses. It returns structured data
+for rendering in the UI.
+"""
+
 import logging
 from html import escape
 
@@ -11,16 +19,23 @@ from lexai.services.openai_client import get_chat_completion, get_embedding
 logger = logging.getLogger(__name__)
 
 
-def generate_matches(query: str, location: str) -> str:
+def generate_matches(query: str, location: str) -> dict:
     """
     Generate a legal response and references for a given query and location.
+
+    Returns a dictionary with keys:
+        - "response": the GPT-generated answer string
+        - "references": list of dicts with keys: url, title, subtitle
+        - "error_html": optional HTML string if an error occurred
     """
     if location not in LOCATION_INFO:
         logger.error(f"Invalid location: {location}")
-        return (
-            "<p><strong>Input Error:</strong> "
-            f"Invalid location: '{escape(location)}'.</p>"
-        )
+        return {
+            "error_html": (
+                "<p><strong>Input Error:</strong> "
+                f"Invalid location: '{escape(location)}'.</p>"
+            )
+        }
 
     try:
         query_embedding = get_embedding(query)
@@ -34,54 +49,50 @@ def generate_matches(query: str, location: str) -> str:
         top_matches = find_top_matches(query_embedding, embeddings, metadata)
         system_prompt = f"{location_data['role_description']}\n{AI_ROLE_TEMPLATE}"
         match_summary = str(top_matches)
-
         ai_response = get_chat_completion(system_prompt, match_summary, query)
 
-        response_html = (
-            "<p><strong>Response:</strong></p>"
-            f"<p>{escape(ai_response)}</p>"
-        )
-
-        reference_html = "<p><strong>References:</strong></p><ul>"
-        for match in top_matches:
-            url = escape(match["url"])
-            title = escape(match["title"])
-            subtitle = escape(match["subtitle"])
-            reference_html += (
-                f'<li><a href="{url}" target="_blank" rel="noopener noreferrer">'
-                f"{title}: {subtitle}</a></li>"
-            )
-        reference_html += "</ul>"
-
-        return response_html + reference_html
+        return {
+            "response": ai_response,
+            "matches": top_matches
+        }
 
     except openai.AuthenticationError:
         logger.error("Invalid OpenAI API key.")
-        return (
-            "<p style='color: #d9534f;'><strong>Error:</strong> "
-            "Invalid OpenAI API key.</p>"
-        )
+        return {
+            "error_html": (
+                "<p style='color: #d9534f;'><strong>Error:</strong> "
+                "Invalid OpenAI API key.</p>"
+            )
+        }
     except openai.OpenAIError as e:
         logger.error(f"OpenAI API Error: {e}")
-        return (
-            "<p style='color: #d9534f;'><strong>OpenAI Error:</strong> "
-            f"{escape(str(e))}</p>"
-        )
+        return {
+            "error_html": (
+                "<p style='color: #d9534f;'><strong>OpenAI Error:</strong> "
+                f"{escape(str(e))}</p>"
+            )
+        }
     except FileNotFoundError as e:
         logger.error(f"File not found: {e}")
-        return (
-            "<p style='color: #d9534f;'><strong>File Error:</strong> "
-            f"{escape(str(e))}</p>"
-        )
+        return {
+            "error_html": (
+                "<p style='color: #d9534f;'><strong>File Error:</strong> "
+                f"{escape(str(e))}</p>"
+            )
+        }
     except ValueError as e:
         logger.error(f"Value error: {e}")
-        return (
-            "<p><strong>Input Error:</strong> "
-            f"{escape(str(e))}</p>"
-        )
+        return {
+            "error_html": (
+                "<p><strong>Input Error:</strong> "
+                f"{escape(str(e))}</p>"
+            )
+        }
     except Exception as e:
         logger.exception("Unhandled exception during generate_matches.")
-        return (
-            "<p style='color: #d9534f;'><strong>Unexpected error:</strong> "
-            f"{escape(str(e))}</p>"
-        )
+        return {
+            "error_html": (
+                "<p style='color: #d9534f;'><strong>Unexpected error:</strong> "
+                f"{escape(str(e))}</p>"
+            )
+        }
