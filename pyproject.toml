@@ -31,6 +31,15 @@ dependencies = [
   "python-dotenv"
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "black",
+  "isort",
+  "ruff"
+]
+
 [project.urls]
 Homepage = "https://github.com/alexulanch/lexai"
 "Bug Tracker" = "https://github.com/alexulanch/lexai/issues"
