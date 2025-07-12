@@ -1,6 +1,8 @@
+from unittest.mock import MagicMock, patch
+
 import numpy as np
-from unittest.mock import patch, MagicMock
-from lexai.services.openai_client import get_embedding, get_chat_completion
+
+from lexai.services.openai_client import get_chat_completion, get_embedding
 
 
 @patch("lexai.services.openai_client.client")

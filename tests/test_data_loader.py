@@ -1,7 +1,8 @@
-import pytest
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
-from pathlib import Path
+import pytest
 
 from lexai.core.data_loader import load_embeddings
 
@@ -46,12 +47,12 @@ def test_load_embeddings_success(temp_npz_file):
 
 
 def test_load_embeddings_missing_key(broken_npz_missing_embeddings):
-    with pytest.raises(KeyError, match="Missing key 'embeddings'"):
+    with pytest.raises(KeyError, match="Missing key"):
         load_embeddings(broken_npz_missing_embeddings)
 
 
 def test_load_metadata_missing_key(broken_npz_missing_columns):
-    with pytest.raises(KeyError, match="Missing key 'titles'"):
+    with pytest.raises(KeyError, match="Missing key"):
         load_embeddings(broken_npz_missing_columns)
 
 

@@ -1,14 +1,16 @@
-from openai import OpenAI
-import numpy as np
 import os
+
+import numpy as np
+from openai import OpenAI
+
 from lexai.config import (
-    MODEL_ENGINE,
-    GPT4_MODEL,
-    GPT4_TEMPERATURE,
-    GPT4_MAX_TOKENS,
-    GPT4_TOP_P,
+    EMBEDDING_MODEL,
     GPT4_FREQUENCY_PENALTY,
+    GPT4_MAX_TOKENS,
+    GPT4_MODEL,
     GPT4_PRESENCE_PENALTY,
+    GPT4_TEMPERATURE,
+    GPT4_TOP_P,
 )
 
 API_KEY = os.getenv("OPENAI_API_KEY")
@@ -17,10 +19,7 @@ client = OpenAI(api_key=API_KEY)
 
 def get_embedding(text: str) -> np.ndarray:
     """
-    Generates an embedding for the given text using OpenAI's text-embedding model.
-
-    The OpenAI API key is loaded from the OPENAI_API_KEY environment variable
-    to authenticate the request.
+    Generates an embedding for the given text using OpenAI's embedding model.
 
     Parameters
     ----------
@@ -30,67 +29,61 @@ def get_embedding(text: str) -> np.ndarray:
     Returns
     -------
     np.ndarray
-        A NumPy array representing the embedding of the input text.
+        A NumPy array representing the embedding.
 
     Raises
     ------
     openai.AuthenticationError
-        If the OPENAI_API_KEY environment variable is not set or is invalid.
+        If the API key is not set or invalid.
     openai.OpenAIError
-        If there's another issue with the OpenAI API call, such as network problems.
+        For other API-related issues.
     """
-    response = client.embeddings.create(input=text, model=MODEL_ENGINE)
+    response = client.embeddings.create(input=text, model=EMBEDDING_MODEL)
     return np.array(response.data[0].embedding)
 
 
-def get_chat_completion(role_description: str, top_matches_str: str, query: str) -> str:
+def get_chat_completion(
+    role_description: str,
+    top_matches_str: str,
+    query: str,
+) -> str:
     """
-    Generates a chat completion response using OpenAI's GPT-4 model.
-
-    The OpenAI API key is loaded from the OPENAI_API_KEY environment variable
-    to authenticate the request. The function constructs a conversation history
-    with system and user roles to provide context to the language model.
+    Generates a chat completion using OpenAI's GPT-4 model.
 
     Parameters
     ----------
     role_description : str
-        The system role description for the AI assistant, defining its persona
-        and limitations.
+        Description of the assistant's persona and context.
     top_matches_str : str
-        A string representation of the top legal information matches. This is
-        provided as system context to help the AI formulate relevant responses.
+        Summary of top legal matches used to guide the assistant.
     query : str
-        The user's direct query or question.
+        The user’s legal query.
 
     Returns
     -------
     str
-        The AI-generated response message from the chat completion.
+        The AI-generated response.
 
     Raises
     ------
     openai.AuthenticationError
-        If the OPENAI_API_KEY environment variable is not set or is invalid.
+        If the API key is not set or invalid.
     openai.OpenAIError
-        If there's an issue with the OpenAI API call, such as rate limiting,
-        or other API-related errors.
+        For other API-related issues.
     """
-
-    response = client.chat.completions.create(model=GPT4_MODEL,
-                                              messages=[
-                                                  {"role": "system",
-                                                      "content": role_description.strip()},
-                                                  {"role": "system",
-                                                      "content": top_matches_str},
-                                                  {"role": "user",
-                                                      "content": query},
-                                                  {"role": "assistant",
-                                                      "content": ""},
-                                              ],
-                                              temperature=GPT4_TEMPERATURE,
-                                              max_tokens=GPT4_MAX_TOKENS,
-                                              top_p=GPT4_TOP_P,
-                                              frequency_penalty=GPT4_FREQUENCY_PENALTY,
-                                              presence_penalty=GPT4_PRESENCE_PENALTY)
+    response = client.chat.completions.create(
+        model=GPT4_MODEL,
+        messages=[
+            {"role": "system", "content": role_description.strip()},
+            {"role": "system", "content": top_matches_str},
+            {"role": "user", "content": query},
+            {"role": "assistant", "content": ""},
+        ],
+        temperature=GPT4_TEMPERATURE,
+        max_tokens=GPT4_MAX_TOKENS,
+        top_p=GPT4_TOP_P,
+        frequency_penalty=GPT4_FREQUENCY_PENALTY,
+        presence_penalty=GPT4_PRESENCE_PENALTY,
+    )
 
     return response.choices[0].message.content.strip()

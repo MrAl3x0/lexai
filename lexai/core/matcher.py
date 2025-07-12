@@ -1,7 +1,9 @@
+from typing import Any
+
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import cdist
-from typing import Any
+
 
 def find_top_matches(
     query_embedding: np.ndarray,
@@ -30,10 +32,22 @@ def find_top_matches(
         A list of dictionaries, where each dictionary represents a top match
         and contains its 'url', 'title', 'subtitle', and 'content'.
     """
+    if jurisdiction_data.empty or embeddings.shape[0] == 0:
+        return []
 
-    distances = cdist(query_embedding.reshape(1, -1), embeddings, metric="cosine")[0]
-    indices = np.argsort(distances)[:num_matches]
-    subset: pd.DataFrame = jurisdiction_data.loc[indices]
-    top_matches: list[dict[str, Any]] = subset.to_dict("records")
+    if jurisdiction_data.shape[0] != embeddings.shape[0]:
+        raise ValueError(
+            "Number of embeddings and metadata entries must match.")
 
-    return top_matches
+    if query_embedding.ndim != 1 or query_embedding.shape[0] != embeddings.shape[1]:
+        raise ValueError(
+            "Query embedding must match the dimensionality of the embeddings."
+        )
+
+    distances = cdist(query_embedding.reshape(1, -1),
+                      embeddings, metric="cosine")[0]
+    safe_num_matches = min(num_matches, len(jurisdiction_data))
+    indices = np.argsort(distances)[:safe_num_matches]
+    subset = jurisdiction_data.iloc[indices]
+
+    return subset.to_dict("records")

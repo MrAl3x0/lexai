@@ -1,136 +1,134 @@
-# LexAI Demo
+# LexAI
 
 ## AI-Powered Legal Research Assistant
 
-This repository hosts a demonstration of **LexAI**, an AI-powered legal research assistant designed to provide relevant legal information based on user queries and specified locations. This project serves as a proof of concept, showcasing the integration of large language models (LLMs) with local embedding data for specialized information retrieval.
+LexAI is an AI assistant that delivers jurisdiction-specific legal information by integrating OpenAI's language models with local vector embeddings. The system uses semantic search to surface relevant legal references and provides a web interface for users to query the model interactively.
 
-### Features
-
-![LexAI Demo Screenshot](assets/screenshot.png)
-
-- **AI-Powered Responses**: Utilizes OpenAI's GPT-4 model to generate natural language responses to legal queries.
-- **Location-Specific Information**: Provides legal information tailored to specific jurisdictions (currently Boulder County, Colorado, and Denver, Colorado).
-- **Semantic Search**: Employs embeddings and vector similarity search to find the most relevant legal documents.
-- **Interactive Web Interface**: Built with Gradio for an easy-to-use, browser-based demonstration.
+![LexAI Screenshot](assets/screenshot.png)
 
 ---
 
-### Getting Started
+## Features
 
-Follow these steps to set up and run the LexAI demo on your local machine.
+- **GPT-4 Integration**: Uses OpenAI's GPT-4 to generate concise, relevant legal responses.
+- **Jurisdiction-Specific Search**: Preloaded embeddings for Boulder County and Denver, Colorado.
+- **Semantic Search Engine**: Uses cosine similarity for embedding-based document retrieval.
+- **Modern Web Interface**: Built with Gradio for real-time interaction.
+- **Modular Design**: Separation of logic for UI, inference, and API handling.
+- **Fully Tested**: Includes unit tests for embedding loading, matching logic, and OpenAI API integration.
 
-#### 1. Clone the Repository
+---
+
+## Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/alexulanch/lexai-demo.git
-cd lexai-demo
+git clone https://github.com/alexulanch/lexai.git
+cd lexai
 ```
 
-This project uses [Git LFS](https://git-lfs.github.com/) to manage the embedding data.
+### 2. Install Git LFS (if needed)
 
-If you’re **not using the provided dev container**, install Git LFS before cloning:
+This project uses [Git LFS](https://git-lfs.github.com/) for storing large `.npz` embedding files.
 
 ```bash
 git lfs install
 git lfs pull
 ```
----
 
-#### 2. Install Dependencies
-
-Install the required Python packages using pip. The dependencies are: `pandas`, `numpy`, `openai`, `gradio`, `scipy`, and `python-dotenv`.
+### 3. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+### 4. Configure OpenAI API Key and Embedding Paths
 
-#### 3. Configure Your OpenAI API Key
+Create a `.env` file in the root directory:
 
-This application relies on the OpenAI API. You will need an API key to access the models used for embeddings and chat completions (e.g., `text-embedding-ada-002`, `gpt-4`).
-
-**Using a `.env` file (recommended for local development):**
-
-1. Create a file named `.env` in the root directory of the project.
-2. Add your API key to the file like this:
-
-    ```dotenv
-    OPENAI_API_KEY="your_openai_api_key_here"
-    ```
-
-3. Ensure `.env` is listed in `.gitignore` to avoid committing it by mistake.
+```dotenv
+OPENAI_API_KEY=your_openai_api_key_here
+BOULDER_EMBEDDINGS_PATH=lexai/data/boulder_embeddings.npz
+DENVER_EMBEDDINGS_PATH=lexai/data/denver_embeddings.npz
+```
 
 ---
 
-#### 4. Run the Application
-
-Start the Gradio app:
+## Running the App
 
 ```bash
 python -m lexai
 ```
 
-You’ll see a local URL like `http://127.0.0.1:7860` — open it in your browser to use LexAI Demo.
+Then open `http://127.0.0.1:7860` in your browser.
 
 ---
 
-### Project Structure
+## Project Structure
 
 ```
-lexai-demo/
-├── .devcontainer/             # Dev container config for VS Code
-│   └── devcontainer.json
-├── lexai/                     # Main Python package
+.
+├── LICENSE
+├── README.md
+├── assets
+│   └── screenshot.png
+├── lexai
 │   ├── __init__.py
-│   ├── __main__.py            # Gradio app entry point
-│   ├── config.py              # Global app config and constants
-│   ├── core/                  # Core logic components
-│   │   ├── data_loader.py     # Loads embedding data
-│   │   └── matcher.py         # Semantic search logic
-│   └── services/              # External API integrations
-│       └── openai_client.py   # Interacts with OpenAI API
-├── pyproject.toml             # Project metadata and build config
-├── requirements.txt           # Python dependencies
-└── .gitignore                 # Files/directories Git should ignore
+│   ├── __main__.py
+│   ├── config.py
+│   ├── core
+│   │   ├── __init__.py
+│   │   ├── data_loader.py
+│   │   ├── match_engine.py
+│   │   └── matcher.py
+│   ├── data
+│   │   ├── boulder_embeddings.npz
+│   │   └── denver_embeddings.npz
+│   ├── models
+│   │   └── embedding_model.py
+│   ├── services
+│   │   └── openai_client.py
+│   └── ui
+│       ├── __init__.py
+│       └── gradio_interface.py
+├── pyproject.toml
+├── pytest.ini
+├── requirements.txt
+└── tests
+    ├── __init__.py
+    ├── test_data_loader.py
+    ├── test_matcher.py
+    └── test_openai_client.py
 ```
 
 ---
 
-### Usage
+## Testing
 
-1. Enter your legal question in the "Query" textbox.
-2. Select the desired "Location" (Boulder or Denver) from the dropdown.
-3. Click "Submit" to get an AI-generated response and relevant legal references.
-4. Use the "Clear" button to reset.
-5. Explore the example queries provided.
+LexAI includes a full suite of unit tests using `pytest`.
 
----
+To run the tests:
 
-### Error Handling
+```bash
+pytest
+```
 
-The app handles several common error cases:
+Tests are located in the `tests/` directory and cover:
 
-- `Invalid OpenAI API key...`: Check your `.env` file or environment variable setup.
-- `OpenAI API Error...`: Rate limits, network issues, etc.
-- `File Error...`: Missing or unreadable `.npz` embedding files.
-- `Input Error...`: Malformed or missing user input.
+- Embedding data loading
+- Semantic similarity matching
+- OpenAI API interaction
 
 ---
 
-### Contributing
+## License
 
-Contributions are welcome! Open an issue or pull request with ideas or fixes.
-
----
-
-### License
-
-MIT
+MIT License
 
 ---
 
-### Acknowledgements
+## Acknowledgements
 
 - Built with [Gradio](https://gradio.app)
 - Powered by [OpenAI](https://openai.com)
