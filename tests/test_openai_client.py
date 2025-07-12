@@ -26,7 +26,7 @@ def test_get_chat_completion_success(mock_client):
 
     response = get_chat_completion(
         role_description="You are a legal assistant.",
-        top_matches_str="1. Case A\n2. Case B",
+        context_summary="1. Case A\n2. Case B",
         query="What is the precedent for X?"
     )
     assert isinstance(response, str)
