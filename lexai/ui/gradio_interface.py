@@ -31,7 +31,7 @@ def build_interface():
 
             with gr.Column(scale=3):
                 response_output = gr.HTML(
-                    value="<p><strong>Response:</strong></p>",
+                    value="Response will appear here.",
                     show_label=False
                 )
                 gr.Button("Flag", variant="secondary")
@@ -40,7 +40,7 @@ def build_interface():
             return gr.update(value=generate_matches(query, location))
 
         def handle_clear():
-            return gr.update(value="<p><strong>Response:</strong></p>")
+            return gr.update(value="Response will appear here.")
 
         submit_btn.click(fn=handle_submit, inputs=[
                          query_input, location_input], outputs=[response_output])
@@ -48,7 +48,7 @@ def build_interface():
 
         gr.Examples(
             examples=[
-                ["Is it legal to construct a rock cairn in an outdoor area?", "Boulder"],
+                ["Is building a rock cairn outdoors allowed by law?", "Boulder"],
                 ["Can I legally possess a dog as a pet?", "Denver"],
                 ["Am I allowed to go shirtless in public?", "Boulder"],
                 ["What is the max legal height for a structure?", "Denver"],

@@ -16,7 +16,7 @@ def generate_matches(query: str, location: str) -> str:
         logger.error(f"Invalid location: {location}")
         return (
             "<p><strong>Input Error:</strong> "
-            f"Invalid location: '{escape(location)}'</p>"
+            f"Invalid location: '{escape(location)}'.</p>"
         )
 
     try:
@@ -26,14 +26,11 @@ def generate_matches(query: str, location: str) -> str:
 
         if embeddings.shape[0] != len(metadata):
             raise ValueError(
-                "Mismatch between number of embeddings and metadata entries"
-            )
+                "Mismatch between number of embeddings and metadata entries.")
 
         top_matches = find_top_matches(query_embedding, embeddings, metadata)
 
-        system_prompt = (
-            f"{location_data['role_description']}\n{AI_ROLE_TEMPLATE}"
-        )
+        system_prompt = f"{location_data['role_description']}\n{AI_ROLE_TEMPLATE}"
         ai_response = get_chat_completion(
             system_prompt, str(top_matches), query)
 
@@ -41,18 +38,18 @@ def generate_matches(query: str, location: str) -> str:
             "<p><strong>Response:</strong></p>"
             f"<p>{escape(ai_response)}</p>"
         )
-        reference_html = "<p><strong>References:</strong></p><ul>"
 
+        reference_html = "<p><strong>References:</strong></p><ul>"
         for match in top_matches:
             url = escape(match["url"])
             title = escape(match["title"])
             subtitle = escape(match["subtitle"])
             reference_html += (
-                f'<li><a href="{url}" target="_blank">'
+                f'<li><a href="{url}" target="_blank" rel="noopener noreferrer">'
                 f"{title}: {subtitle}</a></li>"
             )
-
         reference_html += "</ul>"
+
         return response_html + reference_html
 
     except openai.AuthenticationError:
