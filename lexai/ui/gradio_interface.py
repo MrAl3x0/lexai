@@ -1,12 +1,14 @@
-import gradio as gr
 import logging
-from lexai.config import LOCATION_INFO, APP_DESCRIPTION
+
+import gradio as gr
+
+from lexai.config import APP_DESCRIPTION, LOCATION_INFO
 from lexai.core.match_engine import generate_matches
 
 logger = logging.getLogger(__name__)
 
 
-def launch_interface():
+def build_interface():
     with gr.Blocks(title="LexAI") as iface:
         gr.HTML("<h1 style='text-align: center;'>LexAI</h1>")
         gr.Markdown(APP_DESCRIPTION)
@@ -56,5 +58,5 @@ def launch_interface():
             inputs=[query_input, location_input]
         )
 
-    logger.info("Launching LexAI interface...")
-    iface.launch()
+    logger.info("LexAI interface built.")
+    return iface

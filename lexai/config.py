@@ -1,18 +1,22 @@
-MODEL_ENGINE = "text-embedding-ada-002"
+import os
+
+EMBEDDING_MODEL = "text-embedding-ada-002"
 
 LOCATION_INFO = {
     "Boulder": {
-        "npz_file": "lexai/data/boulder_embeddings.npz",
+        "npz_file": os.getenv(
+            "BOULDER_NPZ_FILE", "lexai/data/boulder_embeddings.npz"
+        ),
         "role_description": (
-            "You are an AI-powered legal assistant specializing in the jurisdiction of "
-            "Boulder County, Colorado."
+            "You are an AI-powered legal assistant specializing in the jurisdiction "
+            "of Boulder County, Colorado."
         ),
     },
     "Denver": {
-        "npz_file": "lexai/data/denver_embeddings.npz",
+        "npz_file": os.getenv("DENVER_NPZ_FILE", "lexai/data/denver_embeddings.npz"),
         "role_description": (
-            "You are an AI-powered legal assistant specializing in the jurisdiction of "
-            "Denver, Colorado."
+            "You are an AI-powered legal assistant specializing in the jurisdiction "
+            "of Denver, Colorado."
         ),
     },
 }
@@ -20,12 +24,11 @@ LOCATION_INFO = {
 APP_DESCRIPTION = (
     "LexAI is an AI-powered legal research app designed to assist individuals, "
     "including law enforcement officers, legal professionals, and the general public, "
-    "in accessing accurate legal information. The app covers various jurisdictions "
-    "and ensures that users can stay informed and confident, regardless of their location. "
-    "This demo is meant to serve as a proof of concept."
+    "in accessing jurisdiction-specific legal information. While LexAI aims to provide "
+    "useful and relevant results, it does not constitute legal advice. Its output may "
+    "not always be accurate or up to date. Users should verify information "
+    "independently and consult qualified legal professionals when needed."
 )
-
-OPENAI_API_KEY_PLACEHOLDER = "Enter your OpenAI API key"
 
 GPT4_MODEL = "gpt-4"
 GPT4_TEMPERATURE = 0.7
@@ -34,9 +37,11 @@ GPT4_TOP_P = 1
 GPT4_FREQUENCY_PENALTY = 0
 GPT4_PRESENCE_PENALTY = 0
 
-AI_ROLE_TEMPLATE = """
-Your expertise lies in providing accurate and timely information on the laws and regulations specific to your jurisdiction.
-Your role is to assist individuals, including law enforcement officers, legal professionals, and the general public,
-in understanding and applying legal standards within this jurisdiction. You are knowledgeable, precise, and always
-ready to offer guidance on legal matters. Your max_tokens is set to 120 so keep your response below that.
-"""
+AI_ROLE_TEMPLATE = (
+    "Your expertise lies in providing accurate and timely information on the laws and "
+    "regulations specific to your jurisdiction. Your role is to assist individuals, "
+    "including law enforcement officers, legal professionals, and the general public. "
+    "You help them understand and apply legal standards within this jurisdiction. You "
+    "are knowledgeable, precise, and always ready to offer guidance on legal matters. "
+    "Your max_tokens is set to 120, so keep your response below that."
+)

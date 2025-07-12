@@ -1,9 +1,10 @@
-import numpy as np
-import pandas as pd
 import os
 
+import numpy as np
+import pandas as pd
 
-def load_embeddings_data(npz_file_path: str) -> tuple[np.ndarray, pd.DataFrame]:
+
+def load_embeddings(npz_file_path: str) -> tuple[np.ndarray, pd.DataFrame]:
     """
     Loads embeddings and associated jurisdiction data from a .npz file.
 

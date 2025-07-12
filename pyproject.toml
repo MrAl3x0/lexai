@@ -1,31 +1,34 @@
 [project]
 name = "lexai"
 version = "0.1.0"
-description = "A demo of LexAI, an AI legal assistant that delivers accurate legal information."
+description = "LexAI is an AI legal assistant that provides accurate, location-specific legal information in a clear and accessible format."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
+
 authors = [
   { name = "Alex Ulanch", email = "alexulanch@gmail.com" },
 ]
+
 keywords = ["AI", "Legal", "Gradio", "OpenAI", "RAG"]
+
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",  
-    "Operating System :: OS Independent",
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Developers",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Application Frameworks"
 ]
 
 dependencies = [
-    "pandas",
-    "numpy",
-    "openai",
-    "gradio",
-    "scipy",
-    "python-dotenv",
+  "pandas",
+  "numpy",
+  "openai",
+  "gradio",
+  "scipy",
+  "python-dotenv"
 ]
 
 [project.urls]
@@ -42,11 +45,11 @@ include = ["lexai*"]
 
 [tool.black]
 line-length = 88
-target-version = ['py38']
+target-version = ["py38"]
 include = '\.pyi?$'
 exclude = '''
 /(
-    \.git
+  \.git
   | \.venv
   | \.mypy_cache
   | \.pytest_cache
@@ -60,20 +63,26 @@ exclude = '''
 '''
 
 [tool.isort]
-known_local_folder = ["lexai"]
 profile = "black"
-line_length = 88
 known_first_party = ["lexai"]
-skip_glob = ["**/data/*"]
+known_local_folder = ["lexai"]
+line_length = 88
 multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
+skip_glob = ["**/data/*"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra -q"
-testpaths = [
-    "tests",
-]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+exclude = ["data", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
