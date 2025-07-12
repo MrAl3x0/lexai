@@ -15,9 +15,24 @@ from lexai.services.lexai_service import LexAIService
 logger = logging.getLogger(__name__)
 
 APP_DESCRIPTION = """
-LexAI is an AI-powered legal assistant that uses GPT-4 and semantic search
-to provide jurisdiction-specific legal guidance.
+LexAI is an AI-powered legal assistant that provides jurisdiction-specific guidance.
+It combines GPT-4 with semantic search to retrieve relevant legal information quickly.
 """
+
+DISCLAIMER_TEXT = """
+<div style='text-align: center; font-size: 0.9em; color: gray; margin-top: 1em;'>
+Results may be inaccurate. Always verify with a legal professional.
+</div>
+"""
+
+EXAMPLE_QUERIES = [
+    ["Is building a rock cairn outdoors allowed by law?", "Boulder"],
+    ["Can I legally possess a dog as a pet?", "Denver"],
+    ["Am I allowed to go shirtless in public?", "Boulder"],
+    ["What is the max legal height for a structure?", "Denver"],
+    ["Is indoor furniture on porches allowed?", "Boulder"],
+    ["Can I graze llamas on public land?", "Denver"],
+]
 
 
 def build_interface():
@@ -55,9 +70,7 @@ def build_interface():
                 gr.Button("Flag", variant="secondary")
 
         def handle_submit(query, location):
-            return gr.update(
-                value=LexAIService.handle_query(query, location)
-            )
+            return gr.update(value=LexAIService.handle_query(query, location))
 
         def handle_clear():
             return gr.update(value="Response will appear here.")
@@ -73,16 +86,11 @@ def build_interface():
         )
 
         gr.Examples(
-            examples=[
-                ["Is building a rock cairn outdoors allowed by law?", "Boulder"],
-                ["Can I legally possess a dog as a pet?", "Denver"],
-                ["Am I allowed to go shirtless in public?", "Boulder"],
-                ["What is the max legal height for a structure?", "Denver"],
-                ["Is indoor furniture on porches allowed?", "Boulder"],
-                ["Can I graze llamas on public land?", "Denver"],
-            ],
+            examples=EXAMPLE_QUERIES,
             inputs=[query_input, location_input]
         )
+
+        gr.HTML(DISCLAIMER_TEXT)
 
     logger.info("LexAI interface built.")
     return iface

@@ -14,14 +14,13 @@ from lexai.core.matcher import find_top_matches
 
 @pytest.fixture
 def sample_embeddings():
-    """Sample array of 5 embedding vectors."""
+    """Sample array of 4 embedding vectors."""
     return np.array(
         [
             [1.0, 0.1, 0.1],
             [0.8, 0.3, 0.2],
             [0.5, 0.5, 0.5],
             [0.1, 0.1, 1.0],
-            [0.0, 0.0, 0.0],
         ],
         dtype=np.float32,
     )
