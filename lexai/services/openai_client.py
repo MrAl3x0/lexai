@@ -2,6 +2,8 @@ import os
 
 import numpy as np
 from openai import OpenAI
+from openai.types.chat import ChatCompletion
+from openai.types.embedding import Embedding
 
 from lexai.config import (
     EMBEDDING_MODEL,
@@ -19,64 +21,53 @@ client = OpenAI(api_key=API_KEY)
 
 def get_embedding(text: str) -> np.ndarray:
     """
-    Generates an embedding for the given text using OpenAI's embedding model.
+    Generates a numerical embedding for the provided text using OpenAI's model.
 
     Parameters
     ----------
     text : str
-        The input text to generate an embedding for.
+        The input text to embed.
 
     Returns
     -------
     np.ndarray
-        A NumPy array representing the embedding.
-
-    Raises
-    ------
-    openai.AuthenticationError
-        If the API key is not set or invalid.
-    openai.OpenAIError
-        For other API-related issues.
+        The embedding vector as a NumPy array.
     """
-    response = client.embeddings.create(input=text, model=EMBEDDING_MODEL)
+    response: Embedding = client.embeddings.create(
+        input=text,
+        model=EMBEDDING_MODEL
+    )
     return np.array(response.data[0].embedding)
 
 
 def get_chat_completion(
     role_description: str,
-    top_matches_str: str,
+    context_summary: str,
     query: str,
 ) -> str:
     """
-    Generates a chat completion using OpenAI's GPT-4 model.
+    Generates a GPT-4 response based on the user’s query and legal context.
 
     Parameters
     ----------
     role_description : str
-        Description of the assistant's persona and context.
-    top_matches_str : str
-        Summary of top legal matches used to guide the assistant.
+        Describes the assistant's role and intended tone or expertise.
+    context_summary : str
+        A stringified summary of relevant legal documents or search results.
     query : str
-        The user’s legal query.
+        The user's legal question.
 
     Returns
     -------
     str
-        The AI-generated response.
-
-    Raises
-    ------
-    openai.AuthenticationError
-        If the API key is not set or invalid.
-    openai.OpenAIError
-        For other API-related issues.
+        The assistant's response.
     """
-    response = client.chat.completions.create(
+    response: ChatCompletion = client.chat.completions.create(
         model=GPT4_MODEL,
         messages=[
             {"role": "system", "content": role_description.strip()},
-            {"role": "system", "content": top_matches_str},
-            {"role": "user", "content": query},
+            {"role": "system", "content": context_summary.strip()},
+            {"role": "user", "content": query.strip()},
             {"role": "assistant", "content": ""},
         ],
         temperature=GPT4_TEMPERATURE,
@@ -85,5 +76,4 @@ def get_chat_completion(
         frequency_penalty=GPT4_FREQUENCY_PENALTY,
         presence_penalty=GPT4_PRESENCE_PENALTY,
     )
-
     return response.choices[0].message.content.strip()

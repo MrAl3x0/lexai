@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 
 def generate_matches(query: str, location: str) -> str:
+    """
+    Generate a legal response and references for a given query and location.
+    """
     if location not in LOCATION_INFO:
         logger.error(f"Invalid location: {location}")
         return (
@@ -29,10 +32,10 @@ def generate_matches(query: str, location: str) -> str:
                 "Mismatch between number of embeddings and metadata entries.")
 
         top_matches = find_top_matches(query_embedding, embeddings, metadata)
-
         system_prompt = f"{location_data['role_description']}\n{AI_ROLE_TEMPLATE}"
-        ai_response = get_chat_completion(
-            system_prompt, str(top_matches), query)
+        match_summary = str(top_matches)
+
+        ai_response = get_chat_completion(system_prompt, match_summary, query)
 
         response_html = (
             "<p><strong>Response:</strong></p>"
