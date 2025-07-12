@@ -1,3 +1,10 @@
+"""
+OpenAI client interface for LexAI.
+
+This module provides helper functions to interact with the OpenAI API,
+including embedding generation and GPT-4 chat completions.
+"""
+
 import os
 
 import numpy as np

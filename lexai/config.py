@@ -1,3 +1,9 @@
+"""
+Configuration constants for the LexAI application.
+
+Includes application-wide text, dropdown options, and file paths.
+"""
+
 import os
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
@@ -20,15 +26,6 @@ LOCATION_INFO = {
         ),
     },
 }
-
-APP_DESCRIPTION = (
-    "LexAI is an AI-powered legal research app designed to assist individuals, "
-    "including law enforcement officers, legal professionals, and the general public, "
-    "in accessing jurisdiction-specific legal information. While LexAI aims to provide "
-    "useful and relevant results, it does not constitute legal advice. Its output may "
-    "not always be accurate or up to date. Users should verify information "
-    "independently and consult qualified legal professionals when needed."
-)
 
 GPT4_MODEL = "gpt-4"
 GPT4_TEMPERATURE = 0.7

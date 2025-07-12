@@ -1,3 +1,10 @@
+"""
+Data loader for LexAI embeddings.
+
+This module provides a utility function to load embedding vectors and
+their associated legal metadata from a .npz file.
+"""
+
 import os
 
 import numpy as np

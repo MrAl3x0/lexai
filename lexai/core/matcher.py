@@ -1,3 +1,10 @@
+"""
+Matching engine for LexAI.
+
+This module provides functionality to find the closest legal documents
+to a user query using cosine similarity on embedding vectors.
+"""
+
 from typing import Any
 
 import numpy as np
