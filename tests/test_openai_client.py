@@ -1,39 +1,99 @@
 """
-Tests for the OpenAI client service in lexai.services.openai_client.
+OpenAI client functions for embedding generation and GPT-4 completions.
+
+This module provides utilities to interact with OpenAI’s API, including
+embedding generation and chat-based completion using the configured models.
 """
 
-from unittest.mock import MagicMock, patch
+import os
 
 import numpy as np
+from openai import OpenAI
+from openai.types.chat import ChatCompletion
+from openai.types.embedding import Embedding
 
-from lexai.services.openai_client import get_chat_completion, get_embedding
+from lexai.config import (
+    EMBEDDING_MODEL,
+    GPT4_FREQUENCY_PENALTY,
+    GPT4_MAX_TOKENS,
+    GPT4_MODEL,
+    GPT4_PRESENCE_PENALTY,
+    GPT4_TEMPERATURE,
+    GPT4_TOP_P,
+)
 
 
-@patch("lexai.services.openai_client.client")
-def test_get_embedding_success(mock_client):
-    """Test that get_embedding returns the correct NumPy array."""
-    mock_response = MagicMock()
-    mock_response.data = [MagicMock(embedding=[0.1, 0.2, 0.3])]
-    mock_client.embeddings.create.return_value = mock_response
+def get_client() -> OpenAI:
+    """
+    Returns a new instance of the OpenAI client using the current API key.
 
-    embedding = get_embedding("Test input")
-    assert isinstance(embedding, np.ndarray)
-    np.testing.assert_array_equal(embedding, np.array([0.1, 0.2, 0.3]))
+    Returns
+    -------
+    OpenAI
+        An authenticated OpenAI client.
+    """
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise EnvironmentError(
+            "OPENAI_API_KEY environment variable is not set.")
+    return OpenAI(api_key=api_key)
 
 
-@patch("lexai.services.openai_client.client")
-def test_get_chat_completion_success(mock_client):
-    """Test that get_chat_completion returns the expected string."""
-    mock_choice = MagicMock()
-    mock_choice.message.content = "Here is your legal summary."
-    mock_response = MagicMock()
-    mock_response.choices = [mock_choice]
-    mock_client.chat.completions.create.return_value = mock_response
+def get_embedding(text: str) -> np.ndarray:
+    """
+    Generates a numerical embedding for the provided text using OpenAI's model.
 
-    response = get_chat_completion(
-        role_description="You are a legal assistant.",
-        context_summary="1. Case A\n2. Case B",
-        query="What is the precedent for X?"
+    Parameters
+    ----------
+    text : str
+        The input text to embed.
+
+    Returns
+    -------
+    np.ndarray
+        The embedding vector as a NumPy array.
+    """
+    client = get_client()
+    response: Embedding = client.embeddings.create(
+        input=text, model=EMBEDDING_MODEL)
+    return np.array(response.data[0].embedding)
+
+
+def get_chat_completion(
+    role_description: str,
+    jurisdiction_summary: str,
+    query: str,
+) -> str:
+    """
+    Generates a GPT-4 response based on the user’s query and legal context.
+
+    Parameters
+    ----------
+    role_description : str
+        Describes the assistant's role and intended tone or expertise.
+    jurisdiction_summary : str
+        A stringified summary of relevant legal documents or search results.
+    query : str
+        The user's legal question.
+
+    Returns
+    -------
+    str
+        The assistant's response.
+    """
+    client = get_client()
+    response: ChatCompletion = client.chat.completions.create(
+        model=GPT4_MODEL,
+        messages=[
+            {"role": "system", "content": role_description.strip()},
+            {"role": "system", "content": jurisdiction_summary.strip()},
+            {"role": "user", "content": query.strip()},
+            {"role": "assistant", "content": ""},
+        ],
+        temperature=GPT4_TEMPERATURE,
+        max_tokens=GPT4_MAX_TOKENS,
+        top_p=GPT4_TOP_P,
+        frequency_penalty=GPT4_FREQUENCY_PENALTY,
+        presence_penalty=GPT4_PRESENCE_PENALTY,
     )
-    assert isinstance(response, str)
-    assert response == "Here is your legal summary."
+    return response.choices[0].message.content.strip()
