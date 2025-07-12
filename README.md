@@ -14,8 +14,9 @@ LexAI is an AI assistant that delivers jurisdiction-specific legal information b
 - **Jurisdiction-Specific Search**: Preloaded embeddings for Boulder County and Denver, Colorado.
 - **Semantic Search Engine**: Uses cosine similarity for embedding-based document retrieval.
 - **Modern Web Interface**: Built with Gradio for real-time interaction.
-- **Modular Design**: Separation of logic for UI, inference, and API handling.
-- **Fully Tested**: Includes unit tests for embedding loading, matching logic, and OpenAI API integration.
+- **Modular Design**: Clean separation of logic for UI, inference, and API handling.
+- **Fully Tested**: Unit tests cover embedding loading, matching logic, and OpenAI API integration.
+- **Developer Ready**: Comes with dev tools like Ruff, Black, pytest, mypy, and test coverage support.
 
 ---
 
@@ -30,25 +31,27 @@ cd lexai
 
 ### 2. Install Git LFS (if needed)
 
-This project uses [Git LFS](https://git-lfs.github.com/) for storing large `.npz` embedding files.
+This project uses [Git LFS](https://git-lfs.github.com/) to manage large files such as `.npz` embedding data.
 
 ```bash
 git lfs install
 git lfs pull
 ```
 
-### 3. Install Python Dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+# For development tools:
+pip install -r dev-requirements.txt
 ```
 
-### 4. Configure OpenAI API Key and Embedding Paths
+### 4. Set Up Environment
 
 Create a `.env` file in the root directory:
 
 ```dotenv
-OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_API_KEY=your_openai_api_key
 BOULDER_EMBEDDINGS_PATH=lexai/data/boulder_embeddings.npz
 DENVER_EMBEDDINGS_PATH=lexai/data/denver_embeddings.npz
 ```
@@ -71,32 +74,29 @@ Then open `http://127.0.0.1:7860` in your browser.
 .
 ├── LICENSE
 ├── README.md
-├── assets
+├── assets/
 │   └── screenshot.png
-├── lexai
-│   ├── __init__.py
+├── dev-requirements.txt
+├── lexai/
 │   ├── __main__.py
 │   ├── config.py
-│   ├── core
-│   │   ├── __init__.py
+│   ├── core/
 │   │   ├── data_loader.py
 │   │   ├── match_engine.py
 │   │   └── matcher.py
-│   ├── data
+│   ├── data/
 │   │   ├── boulder_embeddings.npz
 │   │   └── denver_embeddings.npz
-│   ├── models
-│   │   └── embedding_model.py
-│   ├── services
+│   ├── services/
+│   │   ├── lexai_service.py
 │   │   └── openai_client.py
-│   └── ui
-│       ├── __init__.py
+│   └── ui/
+│       ├── formatters.py
 │       └── gradio_interface.py
 ├── pyproject.toml
 ├── pytest.ini
 ├── requirements.txt
-└── tests
-    ├── __init__.py
+└── tests/
     ├── test_data_loader.py
     ├── test_matcher.py
     └── test_openai_client.py
@@ -106,19 +106,29 @@ Then open `http://127.0.0.1:7860` in your browser.
 
 ## Testing
 
-LexAI includes a full suite of unit tests using `pytest`.
-
-To run the tests:
+To run tests:
 
 ```bash
 pytest
 ```
 
-Tests are located in the `tests/` directory and cover:
+To check code coverage:
 
-- Embedding data loading
-- Semantic similarity matching
-- OpenAI API interaction
+```bash
+pytest --cov=lexai --cov-report=term
+```
+
+To lint:
+
+```bash
+ruff check .
+```
+
+To format code:
+
+```bash
+black .
+```
 
 ---
 
