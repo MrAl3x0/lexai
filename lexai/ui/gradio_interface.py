@@ -1,9 +1,15 @@
+"""
+Gradio interface builder for the LexAI application.
+
+This module defines the UI using Gradio and connects it to the LexAI service layer.
+"""
+
 import logging
 
 import gradio as gr
 
 from lexai.config import LOCATION_INFO
-from lexai.core.match_engine import generate_matches
+from lexai.services.lexai_service import LexAIService
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +20,13 @@ to provide jurisdiction-specific legal guidance.
 
 
 def build_interface():
+    """
+    Constructs and returns the Gradio Blocks interface for LexAI.
+
+    This includes input fields for the user's legal query and location,
+    a response display area, and sample example queries.
+    """
+
     with gr.Blocks(title="LexAI") as iface:
         gr.HTML("<h1 style='text-align: center;'>LexAI</h1>")
         gr.Markdown(APP_DESCRIPTION)
@@ -42,7 +55,7 @@ def build_interface():
                 gr.Button("Flag", variant="secondary")
 
         def handle_submit(query, location):
-            return gr.update(value=generate_matches(query, location))
+            return gr.update(value=LexAIService.handle_query(query, location))
 
         def handle_clear():
             return gr.update(value="Response will appear here.")
