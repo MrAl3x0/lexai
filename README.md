@@ -20,6 +20,26 @@ LexAI is a proof-of-concept AI-powered legal research assistant that helps users
 
 ---
 
+## AI-Powered Legal Research Assistant
+
+LexAI is an AI-powered legal research assistant that helps users access location-specific legal information through a simple web interface. By combining large language models with structured jurisdictional data, LexAI delivers clear, tailored answers to everyday legal questions.
+
+![LexAI Screenshot](assets/screenshot.png)
+
+---
+
+## Features
+
+- **GPT-4 Integration**: Uses OpenAI's GPT-4 to generate concise, relevant legal responses.
+- **Jurisdiction-Specific Search**: Preloaded embeddings for Boulder County and Denver, Colorado.
+- **Semantic Search Engine**: Uses cosine similarity for embedding-based document retrieval.
+- **Modern Web Interface**: Built with Gradio for real-time interaction.
+- **Modular Design**: Clean separation of logic for UI, inference, and API handling.
+- **Fully Tested**: Unit tests cover embedding loading, matching logic, and OpenAI API integration.
+- **Developer Friendly**: Includes dev tools like Ruff, Black, pytest, mypy, and coverage reports.
+
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -48,7 +68,13 @@ pip install -r dev-requirements.txt
 
 ### 4. Set Up Environment
 
-Create a `.env` file in the root directory:
+Copy the template and add your API key:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set:
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
@@ -75,6 +101,7 @@ Then open `http://127.0.0.1:7860` in your browser.
 ├── assets/
 │   └── screenshot.png
 ├── dev-requirements.txt
+├── .env.example
 ├── lexai/
 │   ├── __main__.py
 │   ├── config.py
