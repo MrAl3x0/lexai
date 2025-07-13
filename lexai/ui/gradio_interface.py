@@ -1,4 +1,4 @@
-"""
+""""
 Gradio interface builder for the LexAI application.
 
 This module defines the UI using Gradio and connects it to
@@ -14,24 +14,36 @@ from lexai.services.lexai_service import LexAIService
 
 logger = logging.getLogger(__name__)
 
-APP_DESCRIPTION = """
-LexAI is an AI-powered legal assistant that provides jurisdiction-specific guidance.
-It combines GPT-4 with semantic search to retrieve relevant legal information quickly.
-"""
+APP_DESCRIPTION = (
+    "LexAI is an AI-powered legal assistant that provides fast, "
+    "jurisdiction-specific legal guidance. This proof of concept "
+    "demonstrates how large language models like GPT-4, when combined "
+    "with structured legal data, can help users understand local laws "
+    "in plain language. LexAI is designed to assist with everyday "
+    "legal questions such as housing regulations, zoning restrictions, "
+    "and public ordinances by delivering clear, localized answers. "
+    "By making legal information more accessible, LexAI aims to empower "
+    "individuals, property owners, and civic professionals to make informed "
+    "decisions without needing to navigate dense legal texts or complex codes. "
+    "As the platform evolves, it will incorporate more jurisdictions and topics, "
+    "while continuously reflecting the most up-to-date and accurate "
+    "legal information available."
+)
 
-DISCLAIMER_TEXT = """
-<div style='text-align: center; font-size: 0.9em; color: gray; margin-top: 1em;'>
-Results may be inaccurate. Always verify with a legal professional.
-</div>
-"""
+DISCLAIMER_TEXT = (
+    "<div style='text-align: center; font-size: 0.9em; color: gray; margin-top: 1em;'>"
+    "This tool is for informational purposes only. Results may be inaccurate. "
+    "Consult a licensed attorney for legal advice. Check any references provided."
+    "</div>"
+)
 
 EXAMPLE_QUERIES = [
-    ["Is building a rock cairn outdoors allowed by law?", "Boulder"],
-    ["Can I legally possess a dog as a pet?", "Denver"],
-    ["Am I allowed to go shirtless in public?", "Boulder"],
-    ["What is the max legal height for a structure?", "Denver"],
-    ["Is indoor furniture on porches allowed?", "Boulder"],
-    ["Can I graze llamas on public land?", "Denver"],
+    ["Can I build a backyard fire pit at my home?", "Denver"],
+    ["What permits are required to build an accessory dwelling unit (ADU)?", "Boulder"],
+    ["Are there restrictions on short-term rentals (e.g., Airbnb)?", "Denver"],
+    ["What are the setback requirements for residential construction?", "Boulder"],
+    ["Is a fence over 6 feet allowed without a permit?", "Denver"],
+    ["Can I run a home-based business from my residence?", "Boulder"],
 ]
 
 
@@ -43,7 +55,7 @@ def build_interface():
     a response display area, and sample example queries.
     """
     with gr.Blocks(title="LexAI") as iface:
-        gr.HTML("<h1 style='text-align: center;'>LexAI</h1>")
+        gr.Markdown("<div style='text-align: center'><h1>LexAI</h1></div>")
         gr.Markdown(APP_DESCRIPTION)
 
         with gr.Row():
@@ -63,7 +75,7 @@ def build_interface():
                     submit_btn = gr.Button("Submit", variant="primary")
 
             with gr.Column(scale=3):
-                response_output = gr.HTML(
+                response_output = gr.Markdown(
                     value="Response will appear here.",
                     show_label=False
                 )
@@ -90,7 +102,7 @@ def build_interface():
             inputs=[query_input, location_input]
         )
 
-        gr.HTML(DISCLAIMER_TEXT)
+        gr.Markdown(DISCLAIMER_TEXT)
 
     logger.info("LexAI interface built.")
     return iface
