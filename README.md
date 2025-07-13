@@ -15,7 +15,7 @@ pinned: true
 
 ## AI-Powered Legal Research Assistant (Proof of Concept)
 
-LexAI is a proof-of-concept AI assistant that helps users access legal information based on their locality. By combining language models with location-specific knowledge, it provides tailored answers through an easy-to-use web interface.
+LexAI is a proof-of-concept AI-powered legal research assistant that helps users access location-specific legal information through a simple web interface. By combining large language models with structured jurisdictional data, LexAI delivers clear, tailored answers to everyday legal questions.
 
 ![LexAI Screenshot](assets/screenshot.png)
 
