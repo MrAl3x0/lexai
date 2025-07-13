@@ -1,8 +1,8 @@
-# LexAI
+# LexAI (Proof of Concept)
 
 ## AI-Powered Legal Research Assistant
 
-LexAI is an AI assistant that delivers jurisdiction-specific legal information by integrating OpenAI's language models with local vector embeddings. The system uses semantic search to surface relevant legal references and provides a web interface for users to query the model interactively.
+LexAI is a proof of concept for an AI assistant that provides jurisdiction-aware legal insights. It uses advanced language models to understand user questions and deliver relevant legal information based on your location. The app features a clean, interactive web interface designed for exploration and demonstration.
 
 ![LexAI Screenshot](assets/screenshot.png)
 
@@ -52,8 +52,6 @@ Create a `.env` file in the root directory:
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
-BOULDER_EMBEDDINGS_PATH=lexai/data/boulder_embeddings.npz
-DENVER_EMBEDDINGS_PATH=lexai/data/denver_embeddings.npz
 ```
 
 ---
