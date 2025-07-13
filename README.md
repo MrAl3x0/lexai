@@ -13,9 +13,9 @@ pinned: true
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20HuggingFace-LexAI-blueviolet?logo=huggingface)](https://huggingface.co/spaces/alexulanch/lexai)
 
-## AI-Powered Legal Research Assistant
+## AI-Powered Legal Research Assistant (Proof of Concept)
 
-LexAI is an AI assistant that delivers jurisdiction-specific legal information by integrating OpenAI's language models with local vector embeddings. The system uses semantic search to surface relevant legal references and provides a web interface for users to query the model interactively.
+LexAI is a proof-of-concept AI assistant that helps users access legal information based on their locality. By combining language models with location-specific knowledge, it provides tailored answers through an easy-to-use web interface.
 
 ![LexAI Screenshot](assets/screenshot.png)
 
@@ -65,8 +65,6 @@ Create a `.env` file in the root directory:
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
-BOULDER_EMBEDDINGS_PATH=lexai/data/boulder_embeddings.npz
-DENVER_EMBEDDINGS_PATH=lexai/data/denver_embeddings.npz
 ```
 
 ---
