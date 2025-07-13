@@ -13,9 +13,9 @@ pinned: true
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20HuggingFace-LexAI-blueviolet?logo=huggingface)](https://huggingface.co/spaces/alexulanch/lexai)
 
-## AI-Powered Legal Research Assistant (Proof of Concept)
+## AI-Powered Legal Research Assistant
 
-LexAI is a proof-of-concept AI-powered legal research assistant that helps users access location-specific legal information through a simple web interface. By combining large language models with structured jurisdictional data, LexAI delivers clear, tailored answers to everyday legal questions.
+LexAI is an AI-powered legal research assistant that helps users access location-specific legal information through a simple web interface. By combining large language models with structured jurisdictional data, LexAI delivers clear, tailored answers to everyday legal questions.
 
 ![LexAI Screenshot](assets/screenshot.png)
 
@@ -29,7 +29,7 @@ LexAI is a proof-of-concept AI-powered legal research assistant that helps users
 - **Modern Web Interface**: Built with Gradio for real-time interaction.
 - **Modular Design**: Clean separation of logic for UI, inference, and API handling.
 - **Fully Tested**: Unit tests cover embedding loading, matching logic, and OpenAI API integration.
-- **Developer Ready**: Comes with dev tools like Ruff, Black, pytest, mypy, and test coverage support.
+- **Developer Friendly**: Includes dev tools like Ruff, Black, pytest, mypy, and coverage reports.
 
 ---
 
@@ -61,7 +61,13 @@ pip install -r dev-requirements.txt
 
 ### 4. Set Up Environment
 
-Create a `.env` file in the root directory:
+Copy the template and add your API key:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and set:
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
@@ -88,6 +94,7 @@ Then open `http://127.0.0.1:7860` in your browser.
 ├── assets/
 │   └── screenshot.png
 ├── dev-requirements.txt
+├── .env.example
 ├── lexai/
 │   ├── __main__.py
 │   ├── config.py
