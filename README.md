@@ -74,6 +74,7 @@ Then open `http://127.0.0.1:7860` in your browser.
 .
 ├── LICENSE
 ├── README.md
+├── app.py # Entrypoint for Hugging Face Space
 ├── assets/
 │   └── screenshot.png
 ├── dev-requirements.txt
