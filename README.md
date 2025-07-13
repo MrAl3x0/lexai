@@ -1,4 +1,17 @@
+---
+title: LexAI
+emoji: ⚖️
+colorFrom: purple
+colorTo: red
+sdk: gradio
+sdk_version: 5.34.0
+app_file: lexai/__main__.py
+pinned: true
+---
+
 # LexAI
+
+[![Hugging Face Space](https://img.shields.io/badge/🤗%20HuggingFace-LexAI-blueviolet?logo=huggingface)](https://huggingface.co/spaces/alexulanch/lexai)
 
 ## AI-Powered Legal Research Assistant
 
@@ -74,7 +87,6 @@ Then open `http://127.0.0.1:7860` in your browser.
 .
 ├── LICENSE
 ├── README.md
-├── app.py # Entrypoint for Hugging Face Space
 ├── assets/
 │   └── screenshot.png
 ├── dev-requirements.txt
