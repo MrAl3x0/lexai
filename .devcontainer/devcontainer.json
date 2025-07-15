@@ -1,28 +1,23 @@
 {
-  "name": "LexAI Development Container",
-  "build": {
-    "dockerfile": "Dockerfile"
+  "name": "LexAI",
+  "image": "mcr.microsoft.com/devcontainers/python:3.9",
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {}
   },
-  "forwardPorts": [7860],
-  "remoteEnv": {
-    "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}"
-  },
+  "postCreateCommand": "pip install -r requirements.txt && pip install -r dev-requirements.txt",
   "customizations": {
     "vscode": {
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.formatting.provider": "black",
-        "editor.formatOnSave": true,
-        "isort.check": true,
-        "isort.sortOnSave": true,
-        "python.terminal.activateEnvironment": false
+        "python.analysis.typeCheckingMode": "basic"
       },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance",
-        "charliermarsh.ruff",
-        "ms-azuretools.vscode-docker"
+        "ms-python.vscode-pylance"
       ]
     }
+  },
+  "remoteEnv": {
+    "PYTHONPATH": "/workspaces/lexai"
   }
 }

@@ -1,6 +1,7 @@
-pytest
-pytest-cov
-black
-isort
-ruff
-mypy
+pytest==8.4.1
+pytest-cov==6.2.1
+black==25.1.0
+ruff==0.12.2
+mypy==1.10.0
+isort==6.0.1
+python-dotenv==1.1.1

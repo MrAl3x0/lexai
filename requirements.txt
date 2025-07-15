@@ -1,6 +1,5 @@
-pandas
-numpy
-openai
-gradio
-scipy
-python-dotenv
+gradio==4.44.1
+openai==1.95.0
+numpy==2.0.2
+pandas==2.3.1
+scipy==1.13.1
