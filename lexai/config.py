@@ -6,7 +6,13 @@ Includes application-wide text, dropdown options, and file paths.
 
 import os
 
-EMBEDDING_MODEL = "text-embedding-ada-002"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+EMBEDDING_MODEL = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-ada-002")
+
+WEAVIATE_URL = os.getenv("WEAVIATE_URL", "http://localhost:8080")
+WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
+WEAVIATE_OPENAI_EMBEDDING_MODEL = os.getenv(
+    "WEAVIATE_OPENAI_EMBEDDING_MODEL", "ada")
 
 LOCATION_INFO = {
     "Boulder": {
